@@ -1,5 +1,5 @@
 
-
+import 'package:contacts/database.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -15,7 +15,7 @@ class Add extends StatefulWidget {
 }
 
 class _HomeState extends State<Add> {
-  final databse= Hive.box('database');
+  final database= Hive.box('database');
   TextEditingController forname=new TextEditingController();
   TextEditingController forage=new TextEditingController();
   TextEditingController forphone=new TextEditingController();
@@ -25,9 +25,43 @@ class _HomeState extends State<Add> {
   String phone;
   String email;
 
-  emptyfields(){
-
+  checkinvalid(){
+    Pattern emailType= r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
+    RegExp regex= new RegExp(emailType);
+    if(name==null||age==null||phone==null||email==null)
+    {
+      Alert(context: context,title: 'All fields are required',buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
+      return true;
+    }
+    else if(name=='')
+    {
+      Alert(context: context,title: 'Invalid Name',desc: "Please Enter a valid name",buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
+      return true;
+    }
+    else if(age<1||age>100)
+    {
+      Alert(context: context,title: 'Invalid Age',desc: "Please Enter a valid age\n(1 to 100)",buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
+      return true;
+    }
+    else if(phone.length!=10)
+    {
+      Alert(context: context,title: 'Invalid Phone Number',desc: "Please Enter a valid phone number\n(10 digits only)",buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
+      return true;
+    }
+    else if(!regex.hasMatch(email))
+    {
+      Alert(context: context,title: 'Invalid Email Address',desc: "Please Enter a valid email address(example@site.domain)",buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
+      return true;
+    }
+    else
+      return false;
   }
+
+  add(){
+    Database newdata = Database(name, age, phone, email);
+    database.add(newdata);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +118,10 @@ class _HomeState extends State<Add> {
                       ),
                       helperText: '*reqiured',
                     ),
-                    onSubmitted: (name){
-                      name=name;
+                    onSubmitted: (value){
+                      setState(() {
+                        name=value;  
+                      });
                       FocusScope.of(context).nextFocus();
                     },
                   ),
@@ -109,8 +145,10 @@ class _HomeState extends State<Add> {
                       ),
                       helperText: '*reqiured',
                     ),
-                    onSubmitted: (age){
-                      age=age;
+                    onSubmitted: (value){
+                      setState(() {
+                        age=int.parse(value);  
+                      });
                       FocusScope.of(context).nextFocus();
                     },
                   ),
@@ -134,8 +172,10 @@ class _HomeState extends State<Add> {
                       ),
                       helperText: '*reqiured',
                     ),
-                    onSubmitted: (number){
-                      phone=number;
+                    onSubmitted: (value){
+                      setState(() {
+                        phone=value;  
+                      });
                       FocusScope.of(context).nextFocus();
                     },
                   ),
@@ -158,9 +198,10 @@ class _HomeState extends State<Add> {
                       ),
                       helperText: '*reqiured',
                     ),
-                    onSubmitted: (email){
-                      email=email;
-                      FocusScope.of(context).unfocus();
+                    onSubmitted: (value){
+                      setState(() {
+                        email=value;  
+                      });
                     },
                   ),
                 ),
@@ -174,16 +215,64 @@ class _HomeState extends State<Add> {
                 buttonColor: Colors.lightBlue,
                 child: RaisedButton(
                 onPressed: (){
-                  if(emptyfields())
+                  if(!checkinvalid())
                   {
-                    Alert(context: context,title: 'Empty Fields',desc: 'Please Enter all the fields properly',buttons: [],style: AlertStyle(backgroundColor: Colors.black));
+                    Alert(
+                    context: context,
+                    style: AlertStyle(
+                      backgroundColor: Colors.cyan,
+                    ),
+                    title: "Submit",
+                    desc: "Are you sure you want to submit?",
+                    buttons: [],
+                    content: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          ButtonTheme(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            buttonColor: Colors.black,
+                            child: RaisedButton(
+                              onPressed: (){
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'No',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          ButtonTheme(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            buttonColor: Colors.black,
+                            child: RaisedButton(
+                              onPressed: (){
+                                add();
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Yes',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ).show();
                   }
-                  else
-                  {
-                    //ask for submit confirmation
-                    //call the add function and navigate out
-                  }
-
                 }, 
                 child: Text(
                   'Submit',
