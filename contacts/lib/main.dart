@@ -1,8 +1,11 @@
+import 'package:contacts/addData.dart';
 import 'package:contacts/database.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:hive/hive.dart';
-import 'addData.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +25,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final databse= Hive.box('database');
+  final database= Hive.box('database');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,12 +41,21 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            
-          ),
+        padding: EdgeInsets.all(8),
+        color: Colors.cyanAccent,
+        child: WatchBoxBuilder(box: Hive.box('database'), builder: (context,database){
+          return ListView.builder(
+            itemCount: database.length,
+            itemBuilder: (context,index){
+              final data=database.getAt(index) as Database; //returns our data as our class instan
+
+              return Container(
+                //display the features with your funcions n shit
+
+              );
+            }
+          );
+        },
         ),
       ),
       floatingActionButton: FloatingActionButton(
