@@ -43,17 +43,24 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         padding: EdgeInsets.all(8),
-        color: Colors.cyanAccent,
         child: WatchBoxBuilder(box: Hive.box('database'), builder: (context,database){
           return ListView.builder(
             itemCount: database.length,
             itemBuilder: (context,index){
               final data=database.getAt(index) as Database; //returns the data as our class instance
 
-              return Column(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
+              return InkWell(
+                onTap: (){
+                  Alert(
+                    context: context,
+                    title: 'Options',
+                    buttons: [],                    
+                  ).show();
+                },
+                  child: Column(
+                    children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
                       border: Border.all(color: Colors.blue),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -156,10 +163,11 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ]
-                  ),
-                  ),
-                  SizedBox(height: 3),
-                ],
+                      ),
+                      ),
+                    SizedBox(height: 3),
+                  ],
+                ),
               );
             }
           );

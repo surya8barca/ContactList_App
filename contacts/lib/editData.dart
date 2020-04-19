@@ -10,9 +10,14 @@ void main() => runApp(MaterialApp(
 )
 );
 
+
+
 class Edit extends StatefulWidget {
   final int index;
   Edit({this.index});
+
+
+  
 
   @override
   _HomeState createState() => _HomeState();
@@ -25,11 +30,12 @@ class _HomeState extends State<Edit> {
   TextEditingController forage=new TextEditingController();
   TextEditingController forphone=new TextEditingController();
   TextEditingController foremail=new TextEditingController();
+  
+  String newname;
+  int newage;
+  String newphone;
+  String newemail;
 
-  String name;
-  int age;
-  String phone;
-  String email;
 
   validName(str){
     if(str=='')
@@ -54,7 +60,7 @@ class _HomeState extends State<Edit> {
   validPhone(str){
     if(str.length!=10)
     {
-      Alert(context: context,title: 'Invalid Age',desc: "Please Enter a valid age\n(1 to 100)",buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
+      Alert(context: context,title: 'Invalid Phone Number',desc: "Please Enter a phone number\n(10 digits)",buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
       return false;
     }
     else  
@@ -64,13 +70,17 @@ class _HomeState extends State<Edit> {
   validEmail(str){
     Pattern emailType= r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
     RegExp regex= new RegExp(emailType);
-    if(!regex.hasMatch(email))
+    if(!regex.hasMatch(str))
     {
       Alert(context: context,title: 'Invalid Email Address',desc: "Please Enter a valid email address(example@site.domain)",buttons: [],style: AlertStyle(backgroundColor:Colors.cyan)).show();
       return false;
     }
     else  
       return true;
+  }
+
+  getchanges(name,age,phone,email){
+    return Database(name, age, phone, email);
   }
   
 
@@ -83,7 +93,7 @@ class _HomeState extends State<Edit> {
         backgroundColor: Colors.blueGrey,
         centerTitle: true,
         title: Text(
-          '${data.name}',
+          data.name,
           style: TextStyle(
             fontSize: 28.0,
             color: Colors.black,
@@ -130,8 +140,8 @@ class _HomeState extends State<Edit> {
                         ),
                         onSubmitted: (value){
                           setState(() {
-                            if(validName(value))
-                                data.name=value;  
+                            if(validName(value)&&value!=data.name&&value!=null)
+                                newname=value;    
                           });
                           FocusScope.of(context).unfocus();
                         },
@@ -158,8 +168,8 @@ class _HomeState extends State<Edit> {
                         ),
                           onSubmitted: (value){
                           setState(() {
-                            if(validAge(value))
-                                data.age=int.parse(value);  
+                            if(validAge(value)&&int.parse(value)!=data.age&&value!=null)
+                                newage=int.parse(value);  
                           });
                           FocusScope.of(context).unfocus();
                         },
@@ -186,8 +196,8 @@ class _HomeState extends State<Edit> {
                         ),
                           onSubmitted: (value){
                           setState(() {
-                            if(validPhone(value))
-                                data.phone=value;  
+                            if(validPhone(value)&&value!=data.phone&&value!=null)
+                                newphone=value;
                           });
                           FocusScope.of(context).unfocus();
                         },
@@ -213,8 +223,8 @@ class _HomeState extends State<Edit> {
                         ),
                           onSubmitted: (value){
                           setState(() {
-                            if(validEmail(value))
-                                data.email=value;  
+                            if(validEmail(value)&&value!=data.email&&value!=null)
+                                newemail=value;
                           });
                           FocusScope.of(context).unfocus();
                         },
@@ -230,6 +240,18 @@ class _HomeState extends State<Edit> {
                     buttonColor: Colors.lightBlue,
                     child: RaisedButton(
                     onPressed: (){
+                      if(newname==null)
+                        newname=data.name;
+                      if(newage==null)
+                        newage=data.age;
+                      if(newemail==null)
+                        newemail=data.email;
+                      if(newphone==null)
+                        newphone=data.phone;
+                      Database changes = getchanges(newname,newage,newphone,newemail);
+                      setState(() {
+                        database.putAt(widget.index, changes);
+                      });
                       Navigator.pop(context);
                     }, 
                     child: Text(
