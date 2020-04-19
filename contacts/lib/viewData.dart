@@ -1,13 +1,10 @@
-
-
 import 'package:contacts/database.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 void main() => runApp(MaterialApp(
-  home: Profile(),
-)
-);
+      home: Profile(),
+    ));
 
 class Profile extends StatefulWidget {
   final int index;
@@ -36,64 +33,72 @@ class _HomeState extends State<Profile> {
         ),
       ),
       body: Center(
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      'Details',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color:Colors.cyanAccent,
-                          fontSize: 35,
-                          decoration: TextDecoration.underline,
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Text(
-                      'Name: ${data.name}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color:Colors.cyanAccent,
-                          fontSize: 35,
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Text(
-                      'Age: ${data.age}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color:Colors.cyanAccent,
-                          fontSize: 35,
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Text(
-                      'Phone Number: ${data.phone}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color:Colors.cyanAccent,
-                          fontSize: 35,
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Text(
-                      'Email:\n${data.email}',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color:Colors.cyanAccent,
-                          fontSize: 30,
-                      ),
-                    ),
-                  ],
+        child: Container(
+          margin: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(
+                'Details',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: 35,
+                  decoration: TextDecoration.underline,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Name: ${data.name}',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: 35,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Age: ${data.age}',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: 35,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Phone Number: ${data.phone}',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: 35,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Email:\n${data.email}',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: 30,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
