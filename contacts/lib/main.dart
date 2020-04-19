@@ -1,6 +1,7 @@
 import 'package:contacts/addData.dart';
 import 'package:contacts/database.dart';
 import 'package:contacts/editData.dart';
+import 'package:contacts/viewData.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
@@ -79,7 +80,10 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               FlatButton.icon(
-                                onPressed: (){},
+                                onPressed: (){
+                                  Route route = MaterialPageRoute(builder: (context)=> Profile(index:index));
+                                  Navigator.push(context, route);
+                                },
                                 label: Text(
                                   'View',
                                   style: TextStyle(color: Colors.red)
