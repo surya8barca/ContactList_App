@@ -94,9 +94,9 @@ class _HomeState extends State<Edit> {
   Widget build(BuildContext context) {
     final data = database.getAt(widget.index) as Database;
     return Scaffold(
-      backgroundColor: Colors.cyanAccent,
+      backgroundColor: Colors.brown,
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.brown,
         centerTitle: true,
         title: Text(
           data.name,
@@ -110,7 +110,14 @@ class _HomeState extends State<Edit> {
         child: Container(
           margin: const EdgeInsets.all(5),
           padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            image: DecorationImage(
+              image: NetworkImage(
+                  'https://previews.123rf.com/images/pashabo/pashabo1005/pashabo100500042/7043751-grunge-vintage-manuscript-background.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -244,7 +251,7 @@ class _HomeState extends State<Edit> {
                     borderRadius: new BorderRadius.circular(30)),
                 minWidth: 50,
                 height: 60,
-                buttonColor: Colors.lightBlue,
+                buttonColor: Colors.brown,
                 child: RaisedButton(
                   onPressed: () {
                     if (newname == null) newname = data.name;

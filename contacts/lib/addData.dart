@@ -83,9 +83,9 @@ class _HomeState extends State<Add> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.cyanAccent,
+        backgroundColor: Colors.brown,
         appBar: AppBar(
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Colors.brown,
           centerTitle: true,
           title: Text(
             'Add Data',
@@ -97,9 +97,16 @@ class _HomeState extends State<Add> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            margin: EdgeInsets.all(5),
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              image: DecorationImage(
+                image: NetworkImage(
+                    'https://previews.123rf.com/images/pashabo/pashabo1005/pashabo100500042/7043751-grunge-vintage-manuscript-background.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -224,7 +231,7 @@ class _HomeState extends State<Add> {
                       borderRadius: new BorderRadius.circular(30)),
                   minWidth: 50,
                   height: 60,
-                  buttonColor: Colors.lightBlue,
+                  buttonColor: Colors.brown,
                   child: RaisedButton(
                     onPressed: () {
                       if (!checkinvalid()) {
