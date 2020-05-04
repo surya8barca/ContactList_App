@@ -50,8 +50,7 @@ class _HomeState extends State<Home> {
                   height: 560,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                          'https://i.pinimg.com/originals/0a/a8/bf/0aa8bfa73e2f93d3816b75bbd1b4a95a.jpg'),
+                      image: AssetImage('images/main.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),

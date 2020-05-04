@@ -41,8 +41,7 @@ class _HomeState extends State<Profile> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
               image: DecorationImage(
-                image: NetworkImage(
-                    'https://i.pinimg.com/originals/56/3a/db/563adbeb015fb165c4145a28a6c2e4c8.jpg'),
+                image: AssetImage('images/view.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
